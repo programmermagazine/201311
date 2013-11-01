@@ -1,0 +1,66 @@
+#! /c/iverilog/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_00A09D28 .scope module, "main" "main" 2 12;
+ .timescale 0 0;
+L_0091F8E0 .functor NOT 1, v0091EAD8_0, C4<0>, C4<0>, C4<0>;
+v0091E9D0_0 .net "Q", 0 0, L_0091F870; 1 drivers
+v0091EA28_0 .net "Qbar", 0 0, L_0091F8A8; 1 drivers
+v0091EA80_0 .net "R", 0 0, L_0091F8E0; 1 drivers
+v0091EAD8_0 .var "S", 0 0;
+v0091EB30_0 .var "en", 0 0;
+S_00A09DB0 .scope module, "enLatch1" "enLatch" 2 16, 2 6, S_00A09D28;
+ .timescale 0 0;
+L_00A032A8 .functor NAND 1, v0091EB30_0, v0091EAD8_0, C4<1>, C4<1>;
+L_00A044B8 .functor NAND 1, v0091EB30_0, L_0091F8E0, C4<1>, C4<1>;
+v00A0DFB0_0 .alias "Q", 0 0, v0091E9D0_0;
+v00A031C0_0 .alias "Qbar", 0 0, v0091EA28_0;
+v00A03218_0 .alias "R", 0 0, v0091EA80_0;
+v0091E870_0 .net "Renbar", 0 0, L_00A044B8; 1 drivers
+v0091E8C8_0 .net "S", 0 0, v0091EAD8_0; 1 drivers
+v0091E920_0 .net "Senbar", 0 0, L_00A032A8; 1 drivers
+v0091E978_0 .net "en", 0 0, v0091EB30_0; 1 drivers
+S_00A09E38 .scope module, "L1" "latch" 2 9, 2 1, S_00A09DB0;
+ .timescale 0 0;
+L_0091F870 .functor NAND 1, L_00A032A8, L_0091F8A8, C4<1>, C4<1>;
+L_0091F8A8 .functor NAND 1, L_00A044B8, L_0091F870, C4<1>, C4<1>;
+v00A0FD98_0 .alias "Q", 0 0, v0091E9D0_0;
+v00A0DA88_0 .alias "Qbar", 0 0, v0091EA28_0;
+v00A0DF00_0 .alias "Rbar", 0 0, v0091E870_0;
+v00A0DF58_0 .alias "Sbar", 0 0, v0091E920_0;
+    .scope S_00A09D28;
+T_0 ;
+    %set/v v0091EAD8_0, 0, 1;
+    %set/v v0091EB30_0, 0, 1;
+    %vpi_call 2 23 "$monitor", "%4dns monitor: Sbar=%d Rbar=%d Q=%d Qbar=%d", $stime, v0091EAD8_0, v0091EA80_0, v0091E9D0_0, v0091EA28_0;
+    %vpi_call 2 24 "$dumpfile", "enLatch.vcd";
+    %vpi_call 2 25 "$dumpvars";
+    %end;
+    .thread T_0;
+    .scope S_00A09D28;
+T_1 ;
+    %delay 50, 0;
+    %load/v 8, v0091EAD8_0, 1;
+    %mov 9, 0, 31;
+    %addi 8, 1, 32;
+    %set/v v0091EAD8_0, 8, 1;
+    %delay 5, 0;
+    %set/v v0091EB30_0, 1, 1;
+    %delay 5, 0;
+    %set/v v0091EB30_0, 0, 1;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_00A09D28;
+T_2 ;
+    %delay 500, 0;
+    %vpi_call 2 34 "$finish";
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "enLatch.v";

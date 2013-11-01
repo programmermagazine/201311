@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="../css/pmag.css" type="text/css" />
+</head>
+<body>
+<div id="header_wrap">
+   <h1><a href="https://www.facebook.com/groups/programmerMagazine">程式人雜誌</a> <sub> --  <a href="https://dl.dropbox.com/u/101584453/pmag/201311/htm/home.html">2013 年 11 月號</a> (開放公益出版品)</sub></h1>
+</div>
+<div id="content">
+<div id="TOC">
+<ul>
+<li><a href="#javascript-11-英文單字測驗程式-作者陳鍾誠">JavaScript (11) – 英文單字測驗程式 (作者：陳鍾誠)</a></li>
+</ul>
+</div>
+<h2 id="javascript-11-英文單字測驗程式-作者陳鍾誠"><a href="#javascript-11-英文單字測驗程式-作者陳鍾誠">JavaScript (11) – 英文單字測驗程式 (作者：陳鍾誠)</a></h2>
+<p>在前兩期的「程式人雜誌」當中，我們介紹了的語音合成與辨識的主題，讓網頁也能做語音輸入或念出文章的動作，網址如下：</p>
+<ul>
+<li><a href="https://dl.dropboxusercontent.com/u/101584453/pmag/201309/htm/article2.html">JavaScript (9) – Google 的語音合成 API 之使用</a></li>
+<li><a href="https://dl.dropboxusercontent.com/u/101584453/pmag/201310/htm/article2.html">JavaScript (10)– Google 的語音辨識 API 之使用</a></li>
+</ul>
+<h3 id="簡介"><a href="#簡介">簡介</a></h3>
+<p>在本期中，我們將利用 Google 的語音合成功能，製作一個簡單的測驗程式，這個程式會隨機的抽取題目出來，然後製作出考題來測驗使用者。</p>
+<p>由於運用了 Google 語音功能，可以讓使用者按下發音鈕聽英文發音，因此還沒學會拼字的小學生也可以用這個程式來學習英文。</p>
+<p>此系統會自動累計計算您所答對與答錯的題目數量，透過這個程式，您可以測驗某人是否已經熟悉一群單字，這很適合用來考英文單字，我都用這個系統來考自己的小孩，看看他們英文單字是否背熟了。</p>
+<p>為了鼓勵我的小孩使用這個程式，如果他們回答十題後，錯誤在一題之內的話，我就讓他們玩五分鐘的電動，我發現這樣學英文 還蠻方便的。</p>
+<p>以下是這個「英文單字測驗程式」的介面，每次該程式都會隨機從「測驗題庫」中抽一組題目出來，然後再隨機產生四組答案 (不可與題目的答案重複) 當作候選項，接著用標準答案從剛剛產生的四組答案中隨機取代一組，如此四組答案當中必然有一個正確答案，以下是該程式的一個出題畫面。</p>
+<div class="figure">
+<img src="../img/EnglishTest.jpg" alt="圖、英文單字測驗程式 - 測驗時" /><p class="caption">圖、英文單字測驗程式 - 測驗時</p>
+</div>
+<p>當測驗者選取答案並按下送出後，如果答錯了，系統會告訴您正確答案，請您更正。如果答對了，則系統將會讓您進到下一題，同時計算答對與答錯的題數。 以下是一個答錯時系統要求更正的畫面。</p>
+<div class="figure">
+<img src="../img/EnglishTest2.jpg" alt="圖、英文單字測驗程式 - 答錯時" /><p class="caption">圖、英文單字測驗程式 - 答錯時</p>
+</div>
+<p>如果您在發音按鈕上按一下，則系統會使用 Google 語音合成 API 念出題目上的詞彙，這個功能對剛學英文的小孩特別有用，因為他們還不是很會拼字， 但是聽得懂發音，因此可以根據發音去猜測答案。</p>
+<p>如果您在「答完後自動念答案！」這個選項上打勾，那麼當您答完之後，系統將念出整個正確答案。另外、如果您勾選「問答交換」這個選項，那麼 原本的「看英文、答中文」的功能，會切換成「看中文、答英文」的功能，如下所示：</p>
+<div class="figure">
+<img src="../img/EnglishTest3.jpg" alt="圖、英文單字測驗程式 - 問答交換" /><p class="caption">圖、英文單字測驗程式 - 問答交換</p>
+</div>
+<h3 id="使用影片"><a href="#使用影片">使用影片</a></h3>
+<p>我已經將這個程式放在自己的 dropbox 網站當中，您可以點選下列網址來「用用看」這個程式，應該會更瞭解整個程式的運作過程。</p>
+<ul>
+<li><a href="https://dl.dropboxusercontent.com/u/101584453/en/english.html">https://dl.dropboxusercontent.com/u/101584453/en/english.html</a></li>
+</ul>
+<p>或者您可以先看看我自己使用這個程式的一段教學錄影，先瞭解這個程式的操作方法，然後再自行操做看看：</p>
+<ul>
+<li><a href="http://youtu.be/VtZTfCqCWgQ">http://youtu.be/VtZTfCqCWgQ</a></li>
+</ul>
+<h3 id="程式原始碼"><a href="#程式原始碼">程式原始碼</a></h3>
+<p>以下是這個程式的完整原始碼，您也可以剪貼後存放在自己電腦中使用，請記得要存成 UTF-8 格式。</p>
+<p>檔案：english.html</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;html&gt;</span>
+<span class="kw">&lt;head&gt;</span>
+<span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span> <span class="kw">/&gt;</span>
+<span class="kw">&lt;style&gt;</span>
+label, li, input <span class="kw">{</span> <span class="kw">font-size:</span><span class="dt">200%</span><span class="kw">;</span> <span class="kw">font-family:</span>標楷體<span class="kw">;</span> <span class="kw">}</span>
+li <span class="kw">{</span> <span class="kw">margin:</span><span class="dt">25px</span> <span class="dt">25px</span> <span class="dt">25px</span> <span class="dt">25px</span><span class="kw">;</span> <span class="kw">}</span>
+a<span class="dv">:hover</span> <span class="kw">{</span> <span class="kw">color:</span><span class="dt">red</span><span class="kw">;</span> <span class="kw">}</span>
+<span class="kw">&lt;/style&gt;</span>
+<span class="kw">&lt;style</span><span class="ot"> id=</span><span class="st">&quot;showboxstyle&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/style&gt;</span>
+<span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span><span class="kw">&gt;</span>
+
+<span class="kw">var</span> qaStr= <span class="st">&quot;zero=零, one=一, two=二, three=三, four=四, five=五, six=六, seven=七, eight=八, nine=九, ten=十, eleven=十一, twelve=十二, thirteen=十三, fourteen=十四, fifteen=十五, sixteen=十六, seventeen=十七, eighteen=十八, nineteen=十九, twenty=二十, thirty=三十, forty=四十, fifty=五十, sixty=六十, seventy=七十, eighty=八十, ninety=九十, houndred=百, thousand=千, million=百萬, billion=十億, year=年, I=我, you=你, he=他(男生), she=她(女生), old=老;年齡大, read=讀, trace=描繪;跟著劃, unit=單元, how=如何, tall=高的, short=矮的, content=內容, write=寫, practice=練習, worksheet=工作清單, sentence=句子, learn=學習, new=新的, word=單字;詞彙, daily=每天的, count=數;算, repeat=重複, after=在...之後, sorrt=對不起, bad=壞的, father;dad=爹地;爸爸, bat=球棒, cat=貓, rat=老鼠, mad=生氣;抓狂, fat=胖的, bed=床, chair=椅子, desk=書桌, sofa=沙發, table=桌子, is;are;was;were=是, it=它, my=我的, no=不, on=在...上面, the=這個, under=在..下面, where=在哪裡, bag=袋子, key=鑰匙, pencil=鉛筆, box=盒子, watch=手錶, bottle=水壺, not=不, that=那個, this=這個, yes=是, your=你的, dig=挖, dot=小圓點, tip=小費;頂端, tub=桶子, zip=拉鏈, sip=吸, sit=坐, zoo=動物園, sad=傷心的;難過的, gap=間隔;間隙, cap=鴨舌帽, get=得到, cop=警察, god=上帝;神, cut=切;割, web=蜘蛛網, wet=濕的, hit=打擊, wit=機智, hop=單腳跳&quot;</span>;
+
+<span class="er">var qa = qaStr.split(&quot;,&quot;);</span>
+
+<span class="er">function rand(n) {</span>
+<span class="er">  return Math.floor(Math.random()*n)</span>
+}
+
+<span class="er">function selectQA() {</span>
+<span class="er">  return qa[rand(qa.length)];</span>
+}
+
+<span class="er">function Q(s) { </span>
+  <span class="kw">if</span> (<span class="ot">isSwap</span>.<span class="fu">checked</span>) 
+<span class="er">    return s.split(&quot;=&quot;)[1]; </span>
+  <span class="kw">else</span>
+<span class="er">    return s.split(&quot;=&quot;)[0]; </span>
+}
+
+<span class="er">function A(s) { </span>
+  <span class="kw">if</span> (<span class="ot">isSwap</span>.<span class="fu">checked</span>) 
+<span class="er">    return s.split(&quot;=&quot;)[0]; </span>
+  <span class="kw">else</span>
+<span class="er">    return s.split(&quot;=&quot;)[1]; </span>
+}
+
+<span class="kw">var</span> question=<span class="kw">null</span>, answers=[], choice=<span class="kw">null</span>, q=<span class="kw">null</span>, msg=<span class="kw">null</span>;
+<span class="kw">var</span> audioControlQ = <span class="kw">null</span>, audioControlA = <span class="kw">null</span>, audioErrorControl=<span class="kw">null</span>, audioCorrectControl=<span class="kw">null</span>;
+<span class="kw">var</span> correct=<span class="dv">0</span>, wrong=<span class="dv">0</span>, isChecked = <span class="kw">false</span>;
+
+<span class="er">function load() {</span>
+<span class="er">  question = document.getElementById(&quot;question&quot;);</span>
+  answers = [];
+<span class="er">  answers[1]  = document.getElementById(&quot;answer1&quot;);</span>
+<span class="er">  answers[2]  = document.getElementById(&quot;answer2&quot;);</span>
+<span class="er">  answers[3]  = document.getElementById(&quot;answer3&quot;);</span>
+<span class="er">  answers[4]  = document.getElementById(&quot;answer4&quot;);</span>
+<span class="er">  choice = document.getElementById(&quot;choice&quot;);</span>
+<span class="er">  msg = document.getElementById(&quot;msg&quot;);</span>
+<span class="er">  countMag = document.getElementById(&quot;countMsg&quot;);</span>
+<span class="er">  isAudio = document.getElementById(&quot;isAudio&quot;);</span>
+<span class="er">  isSwap = document.getElementById(&quot;isSwap&quot;);</span>
+<span class="er">  audioControlQ = document.getElementById(&quot;audio&quot;);</span>
+<span class="er">  audioControlQ.addEventListener(&#39;ended&#39;, function(){ this.currentTime = 0; }, false);</span>
+<span class="er">  audioControlA = document.getElementById(&quot;audio_zh&quot;);</span>
+<span class="er">  audioControlA.addEventListener(&#39;ended&#39;, function(){ this.currentTime = 0; }, false);</span>
+<span class="er">  audioErrorControl = document.getElementById(&quot;audio_error&quot;);</span>
+<span class="er">  audioErrorControl.addEventListener(&#39;ended&#39;, function(){ this.currentTime = 0; }, false);</span>
+<span class="er">  audioCorrectControl = document.getElementById(&quot;audio_error&quot;);</span>
+<span class="er">  audioCorrectControl.addEventListener(&#39;ended&#39;, function(){ this.currentTime = 0; }, false);</span>
+}
+
+<span class="er">function chooseA(obj) {</span>
+  <span class="ot">choice</span>.<span class="fu">innerHTML</span> = <span class="ot">obj</span>.<span class="fu">innerHTML</span>;
+}
+
+<span class="er">function test() {</span>
+  isChecked = <span class="kw">false</span>;
+  <span class="ot">choice</span>.<span class="fu">innerHTML</span> = <span class="st">&quot;?&quot;</span>;
+  <span class="ot">msg</span>.<span class="fu">innerHTML</span> = <span class="st">&quot;&quot;</span>;
+<span class="er">  q = selectQA();</span>
+<span class="er">  question.innerHTML = Q(q);</span>
+<span class="er">  answer = A(q);</span>
+  <span class="kw">if</span> (<span class="ot">isSwap</span>.<span class="fu">checked</span>) {
+    <span class="ot">audioControlQ</span>.<span class="fu">src</span> = <span class="st">&#39;http://translate.google.com/translate_tts?ie=utf-8&amp;tl=zh&amp;q=&#39;</span>+<span class="fu">Q</span>(q);
+    <span class="ot">audioControlA</span>.<span class="fu">src</span> = <span class="st">&#39;http://translate.google.com/translate_tts?ie=utf-8&amp;tl=en&amp;q=&#39;</span>+<span class="fu">A</span>(q);
+  }
+  <span class="kw">else</span> {
+    <span class="ot">audioControlQ</span>.<span class="fu">src</span> = <span class="st">&#39;http://translate.google.com/translate_tts?ie=utf-8&amp;tl=en&amp;q=&#39;</span>+<span class="fu">Q</span>(q);
+    <span class="ot">audioControlA</span>.<span class="fu">src</span> = <span class="st">&#39;http://translate.google.com/translate_tts?ie=utf-8&amp;tl=zh&amp;q=&#39;</span>+<span class="fu">A</span>(q);
+  }
+  <span class="kw">var</span> set = {};
+<span class="er">  set[q] = &quot;&quot;;</span>
+  <span class="kw">for</span> (i=<span class="dv">1</span>; i&lt;=<span class="dv">4</span>; ) {
+    a = <span class="fu">selectQA</span>();
+    answers[i].<span class="fu">innerHTML</span> = <span class="fu">A</span>(a);
+    <span class="kw">if</span> (set[a] == <span class="st">&quot;&quot;</span>) <span class="kw">continue</span>; <span class="kw">else</span> i++;
+    set[a] = <span class="st">&quot;&quot;</span>;
+  }
+<span class="er">  answers[1+rand(4)].innerHTML = A(q);</span>
+}
+
+<span class="er">function check() {</span>
+  <span class="kw">if</span> (<span class="ot">isAudio</span>.<span class="fu">checked</span>) {
+    <span class="kw">if</span> (<span class="ot">choice</span>.<span class="fu">innerHTML</span> != <span class="fu">A</span>(q)) {
+      <span class="fu">setTimeout</span>(<span class="kw">function</span> () {
+        <span class="fu">playAudio</span>(<span class="st">&#39;audio_error&#39;</span>);
+      }, <span class="dv">1000</span>);
+    } <span class="kw">else</span> {
+      <span class="fu">setTimeout</span>(<span class="kw">function</span> () {
+        <span class="fu">playAudio</span>(<span class="st">&#39;audio_correct&#39;</span>);
+      }, <span class="dv">1000</span>);
+    }
+    <span class="fu">setTimeout</span>(<span class="kw">function</span> () {
+      <span class="fu">playAudio</span>(<span class="st">&#39;audio&#39;</span>);
+    }, <span class="dv">3000</span>);
+    <span class="fu">setTimeout</span>(<span class="kw">function</span> () {
+      <span class="fu">playAudio</span>(<span class="st">&#39;audio_zh&#39;</span>);
+    }, <span class="dv">4000</span>);
+  }
+<span class="er">  if (isChecked) return (choice.innerHTML == A(q));</span>
+  isChecked = <span class="kw">true</span>;
+<span class="er">  if (choice.innerHTML == A(q)) {</span>
+<span class="er">    msg.innerHTML = &quot;答對了！&quot;+Q(q)+&quot;=&quot;+A(q);</span>
+    correct ++;
+  } <span class="kw">else</span> {
+    <span class="ot">msg</span>.<span class="fu">innerHTML</span> = <span class="st">&quot;答錯了！&quot;</span>+<span class="fu">Q</span>(q)+<span class="st">&quot;=&quot;</span>+<span class="fu">A</span>(q)+<span class="st">&quot;，請更正！&quot;</span>;
+    wrong ++;
+  }
+  <span class="ot">countMsg</span>.<span class="fu">innerHTML</span> = <span class="st">&quot;答對 &quot;</span>+correct+<span class="st">&quot; 題，答錯 &quot;</span>+wrong+<span class="st">&quot; 題！&quot;</span>;
+<span class="er">  return (choice.innerHTML == A(q));</span>
+}
+
+<span class="er">function pass() {</span>
+<span class="er">  if (check()) {</span>
+   <span class="kw">if</span> (<span class="ot">isAudio</span>.<span class="fu">checked</span>)
+     passDelay = <span class="dv">6000</span>;
+   <span class="kw">else</span> 
+     passDelay = <span class="dv">0</span>;
+<span class="er">    setTimeout(function () {</span>
+<span class="er">      test();</span>
+    }, passDelay);
+  }
+}
+
+<span class="er">function playAudio(name) {</span>
+<span class="er">  document.getElementById(name).play();</span>
+}
+
+<span class="kw">&lt;/script&gt;</span>   
+<span class="kw">&lt;/head&gt;</span>
+<span class="kw">&lt;body</span><span class="ot"> onload=</span><span class="st">&quot;load(); test()&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;form&gt;</span>
+<span class="kw">&lt;table</span><span class="ot"> width=</span><span class="st">&quot;95%&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;tr&gt;&lt;td&gt;&lt;label</span><span class="ot"> id=</span><span class="st">&quot;countMsg&quot;</span><span class="kw">&gt;</span>答對 0 題，答錯 0 題！<span class="kw">&lt;/label&gt;&lt;/tr&gt;</span>
+<span class="kw">&lt;tr&gt;&lt;td&gt;&lt;label&gt;</span>------------------------------------<span class="kw">&lt;/label&gt;&lt;/tr&gt;</span>
+<span class="kw">&lt;tr&gt;&lt;td&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> id=</span><span class="st">&quot;question&quot;</span><span class="kw">&gt;</span>詞彙<span class="kw">&lt;/label&gt;</span> <span class="dv">&amp;nbsp;</span> <span class="dv">&amp;nbsp;</span> <span class="dv">&amp;nbsp;</span> 
+  <span class="kw">&lt;audio</span><span class="ot"> id=</span><span class="st">&quot;audio_correct&quot;</span><span class="ot"> src=</span><span class="st">&quot;http://translate.google.com/translate_tts?ie=utf-8</span><span class="er">&amp;</span><span class="st">tl=zh</span><span class="er">&amp;</span><span class="st">q=答對了&quot;</span><span class="kw">&gt;&lt;/audio&gt;</span>
+  <span class="kw">&lt;audio</span><span class="ot"> id=</span><span class="st">&quot;audio_error&quot;</span><span class="ot"> src=</span><span class="st">&quot;http://translate.google.com/translate_tts?ie=utf-8</span><span class="er">&amp;</span><span class="st">tl=zh</span><span class="er">&amp;</span><span class="st">q=答錯了&quot;</span><span class="kw">&gt;&lt;/audio&gt;</span>
+  <span class="kw">&lt;audio</span><span class="ot"> id=</span><span class="st">&quot;audio&quot;</span><span class="ot"> src=</span><span class="st">&quot;http://translate.google.com/translate_tts?ie=utf-8</span><span class="er">&amp;</span><span class="st">tl=en</span><span class="er">&amp;</span><span class="st">q=mother&quot;</span><span class="kw">&gt;&lt;/audio&gt;</span>
+  <span class="kw">&lt;audio</span><span class="ot"> id=</span><span class="st">&quot;audio_zh&quot;</span><span class="ot"> src=</span><span class="st">&quot;http://translate.google.com/translate_tts?ie=utf-8</span><span class="er">&amp;</span><span class="st">tl=zh</span><span class="er">&amp;</span><span class="st">q=媽媽&quot;</span><span class="kw">&gt;&lt;/audio&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> onclick=</span><span class="st">&quot;playAudio(&#39;audio&#39;)&quot;</span><span class="ot"> value=</span><span class="st">&quot;發音&quot;</span><span class="kw">&gt;</span>  
+  <span class="dv">&amp;nbsp;</span> <span class="dv">&amp;nbsp;</span> <span class="dv">&amp;nbsp;</span> <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> id=</span><span class="st">&quot;isAudio&quot;</span><span class="kw">&gt;</span> 答完後自動念答案！<span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> id=</span><span class="st">&quot;isSwap&quot;</span><span class="ot"> onchange=</span><span class="st">&quot;test()&quot;</span><span class="kw">&gt;</span>問答交換
+  <span class="kw">&lt;ol&gt;</span>
+    <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> id=</span><span class="st">&quot;answer1&quot;</span><span class="ot"> onclick=</span><span class="st">&quot;chooseA(this)&quot;</span><span class="kw">&gt;</span>答案1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> id=</span><span class="st">&quot;answer2&quot;</span><span class="ot"> onclick=</span><span class="st">&quot;chooseA(this)&quot;</span><span class="kw">&gt;</span>答案2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> id=</span><span class="st">&quot;answer3&quot;</span><span class="ot"> onclick=</span><span class="st">&quot;chooseA(this)&quot;</span><span class="kw">&gt;</span>答案3<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> id=</span><span class="st">&quot;answer4&quot;</span><span class="ot"> onclick=</span><span class="st">&quot;chooseA(this)&quot;</span><span class="kw">&gt;</span>答案4<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;/ol&gt;</span>
+<span class="kw">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="kw">&lt;tr&gt;&lt;td&gt;&lt;label&gt;</span>你選的答案是：<span class="kw">&lt;/label&gt;&lt;label</span><span class="ot"> id=</span><span class="st">&quot;choice&quot;</span><span class="kw">&gt;</span>?<span class="kw">&lt;/label&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="kw">&lt;tr&gt;&lt;td&gt;&lt;label</span><span class="ot"> id=</span><span class="st">&quot;msg&quot;</span><span class="kw">&gt;</span>正確的答案是：?<span class="kw">&lt;/label&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="kw">&lt;tr&gt;&lt;td&gt;&lt;label&gt;</span>------------------------------------<span class="kw">&lt;/label&gt;&lt;/tr&gt;</span>
+<span class="kw">&lt;tr&gt;&lt;td&gt;</span>
+<span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> value=</span><span class="st">&quot;送出答案&quot;</span><span class="ot"> onclick=</span><span class="st">&quot;pass()&quot;</span><span class="kw">/&gt;&lt;br/&gt;</span>
+<span class="kw">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="kw">&lt;/table&gt;</span>
+<span class="kw">&lt;/form&gt;</span>
+<span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre>
+<h3 id="結語"><a href="#結語">結語</a></h3>
+<p>透過 Google 語音 API，我們可以很容易的將發音功能或語音辨識功能加入到網頁中，這樣的功能對於像上述的測驗系統來說特別有用，這樣的網路服務大大的提升了網頁 JavaScript 程式設計人員的開發速度，讓建構這類的網站更加容易了。</p>
+<p>從今年一月開始，本系列關於 JavaScript 的文章到此已經刊載了 11 期，到此將暫時告一個段落，日後筆者若還有關於 JavaScript 的文章，也還會不定期與讀者分享，感謝大家的閱讀！</p>
+<h3 id="參考文獻"><a href="#參考文獻">參考文獻</a></h3>
+<ul>
+<li><a href="https://dl.dropboxusercontent.com/u/101584453/pmag/201309/htm/article2.html">JavaScript (9) – Google 的語音合成 API 之使用</a></li>
+<li><a href="https://dl.dropboxusercontent.com/u/101584453/pmag/201310/htm/article2.html">JavaScript (10)– Google 的語音辨識 API 之使用</a></li>
+</ul>
+</div>
+<div id="footer">
+<a href="https://www.facebook.com/groups/programmerMagazine/">程式人雜誌</a> ，採用 <a href="http://creativecommons.org/licenses/by-sa/3.0/tw/ ">創作共用：姓名標示、相同方式分享</a> 授權，歡迎加入 <a href="https://www.facebook.com/groups/programmerMagazine/">雜誌社團</a>
+</div>
+</body>
+</html>

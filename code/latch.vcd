@@ -1,0 +1,90 @@
+$date
+	Mon Oct 14 20:13:58 2013
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module main $end
+$var wire 1 ! Q $end
+$var wire 1 " Qbar $end
+$var wire 1 # Rbar $end
+$var reg 1 $ Sbar $end
+$scope module latch1 $end
+$var wire 1 ! Q $end
+$var wire 1 " Qbar $end
+$var wire 1 # Rbar $end
+$var wire 1 % Sbar $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0%
+0$
+1#
+0"
+1!
+$end
+#50
+0!
+1"
+0#
+1$
+1%
+#100
+0"
+1!
+1#
+0$
+0%
+#150
+0!
+1"
+0#
+1$
+1%
+#200
+0"
+1!
+1#
+0$
+0%
+#250
+0!
+1"
+0#
+1$
+1%
+#300
+0"
+1!
+1#
+0$
+0%
+#350
+0!
+1"
+0#
+1$
+1%
+#400
+0"
+1!
+1#
+0$
+0%
+#450
+0!
+1"
+0#
+1$
+1%
+#500
+0"
+1!
+1#
+0$
+0%

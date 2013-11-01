@@ -1,0 +1,49 @@
+#! /c/iverilog/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_006F44D0 .scope module, "main" "main" 2 6;
+ .timescale 0 0;
+L_006FD5E0 .functor NOT 1, v006FD4A8_0, C4<0>, C4<0>, C4<0>;
+v006FD3A0_0 .net "Q", 0 0, L_006FF230; 1 drivers
+v006FD3F8_0 .net "Qbar", 0 0, L_006FD570; 1 drivers
+v006FD450_0 .net "Rbar", 0 0, L_006FD5E0; 1 drivers
+v006FD4A8_0 .var "Sbar", 0 0;
+S_006F31C0 .scope module, "latch1" "latch" 2 10, 2 1, S_006F44D0;
+ .timescale 0 0;
+L_006FF230 .functor NAND 1, v006FD4A8_0, L_006FD570, C4<1>, C4<1>;
+L_006FD570 .functor NAND 1, L_006FD5E0, L_006FF230, C4<1>, C4<1>;
+v006F3248_0 .alias "Q", 0 0, v006FD3A0_0;
+v006F32A0_0 .alias "Qbar", 0 0, v006FD3F8_0;
+v006FD2F0_0 .alias "Rbar", 0 0, v006FD450_0;
+v006FD348_0 .net "Sbar", 0 0, v006FD4A8_0; 1 drivers
+    .scope S_006F44D0;
+T_0 ;
+    %set/v v006FD4A8_0, 0, 1;
+    %vpi_call 2 16 "$monitor", "%4dns monitor: Sbar=%d Rbar=%d Q=%d Qbar=%d", $stime, v006FD4A8_0, v006FD450_0, v006FD3A0_0, v006FD3F8_0;
+    %vpi_call 2 17 "$dumpfile", "latch.vcd";
+    %vpi_call 2 18 "$dumpvars";
+    %end;
+    .thread T_0;
+    .scope S_006F44D0;
+T_1 ;
+    %delay 50, 0;
+    %load/v 8, v006FD4A8_0, 1;
+    %mov 9, 0, 31;
+    %addi 8, 1, 32;
+    %set/v v006FD4A8_0, 8, 1;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_006F44D0;
+T_2 ;
+    %delay 500, 0;
+    %vpi_call 2 25 "$finish";
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "latch.v";

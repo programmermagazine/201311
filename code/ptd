@@ -1,0 +1,50 @@
+#! /c/iverilog/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_00613248 .scope module, "main" "main" 2 7;
+ .timescale 0 0;
+v0061EB00_0 .var "clk", 0 0;
+v0061EB58_0 .net "p", 0 0, L_0078A858; 1 drivers
+S_00613C30 .scope module, "ptd1" "ptd" 2 11, 2 1, S_00613248;
+ .timescale 0 0;
+L_006132D0/d .functor NOT 1, v0061EB00_0, C4<0>, C4<0>, C4<0>;
+L_006132D0 .delay (2,2,2) L_006132D0/d;
+L_0061EBE8/d .functor NAND 1, L_006132D0, v0061EB00_0, C4<1>, C4<1>;
+L_0061EBE8 .delay (2,2,2) L_0061EBE8/d;
+L_0078A858/d .functor NOT 1, L_0061EBE8, C4<0>, C4<0>, C4<0>;
+L_0078A858 .delay (2,2,2) L_0078A858/d;
+v00613CB8_0 .net "clk", 0 0, v0061EB00_0; 1 drivers
+v00613D10_0 .net "nclkd", 0 0, L_006132D0; 1 drivers
+v0061EA50_0 .net "npulse", 0 0, L_0061EBE8; 1 drivers
+v0061EAA8_0 .alias "ppulse", 0 0, v0061EB58_0;
+    .scope S_00613248;
+T_0 ;
+    %set/v v0061EB00_0, 0, 1;
+    %vpi_call 2 15 "$monitor", "%dns monitor: clk=%b p=%d", $stime, v0061EB00_0, v0061EB58_0;
+    %vpi_call 2 16 "$dumpfile", "ptd.vcd";
+    %vpi_call 2 17 "$dumpvars";
+    %end;
+    .thread T_0;
+    .scope S_00613248;
+T_1 ;
+    %delay 50, 0;
+    %load/v 8, v0061EB00_0, 1;
+    %mov 9, 0, 31;
+    %addi 8, 1, 32;
+    %set/v v0061EB00_0, 8, 1;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_00613248;
+T_2 ;
+    %delay 500, 0;
+    %vpi_call 2 24 "$finish";
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "ptd.v";

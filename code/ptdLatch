@@ -1,0 +1,91 @@
+#! /c/iverilog/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_006F00D8 .scope module, "main" "main" 2 23;
+ .timescale 0 0;
+L_006EAE20 .functor NOT 1, v007DA6B8_0, C4<0>, C4<0>, C4<0>;
+v007DA5B0_0 .net "Q", 0 0, L_006EADB0; 1 drivers
+v007DA608_0 .net "Qbar", 0 0, L_006EADE8; 1 drivers
+v007DA660_0 .net "R", 0 0, L_006EAE20; 1 drivers
+v007DA6B8_0 .var "S", 0 0;
+v007DA710_0 .var "clk", 0 0;
+S_006F0160 .scope module, "PL" "ptdLatch" 2 27, 2 18, S_006F00D8;
+ .timescale 0 0;
+v007DA3A0_0 .alias "Q", 0 0, v007DA5B0_0;
+v007DA3F8_0 .alias "Qbar", 0 0, v007DA608_0;
+v007DA450_0 .alias "R", 0 0, v007DA660_0;
+v007DA4A8_0 .net "S", 0 0, v007DA6B8_0; 1 drivers
+v007DA500_0 .net "clk", 0 0, v007DA710_0; 1 drivers
+v007DA558_0 .net "ppulse", 0 0, L_006EAC60; 1 drivers
+S_006F02F8 .scope module, "PTD" "ptd" 2 19, 2 12, S_006F0160;
+ .timescale 0 0;
+L_007DE348/d .functor NOT 1, v007DA710_0, C4<0>, C4<0>, C4<0>;
+L_007DE348 .delay (2,2,2) L_007DE348/d;
+L_007DE670/d .functor NAND 1, L_007DE348, v007DA710_0, C4<1>, C4<1>;
+L_007DE670 .delay (2,2,2) L_007DE670/d;
+L_006EAC60/d .functor NOT 1, L_007DE670, C4<0>, C4<0>, C4<0>;
+L_006EAC60 .delay (2,2,2) L_006EAC60/d;
+v007DA240_0 .alias "clk", 0 0, v007DA500_0;
+v007DA298_0 .net "nclkd", 0 0, L_007DE348; 1 drivers
+v007DA2F0_0 .net "npulse", 0 0, L_007DE670; 1 drivers
+v007DA348_0 .alias "ppulse", 0 0, v007DA558_0;
+S_006F01E8 .scope module, "EL" "enLatch" 2 20, 2 6, S_006F0160;
+ .timescale 0 0;
+L_006EACD0 .functor NAND 1, L_006EAC60, v007DA6B8_0, C4<1>, C4<1>;
+L_006EAD40 .functor NAND 1, L_006EAC60, L_006EAE20, C4<1>, C4<1>;
+v007D9FD8_0 .alias "Q", 0 0, v007DA5B0_0;
+v007DA030_0 .alias "Qbar", 0 0, v007DA608_0;
+v007DA088_0 .alias "R", 0 0, v007DA660_0;
+v007DA0E0_0 .net "Renbar", 0 0, L_006EAD40; 1 drivers
+v007DA138_0 .alias "S", 0 0, v007DA4A8_0;
+v007DA190_0 .net "Senbar", 0 0, L_006EACD0; 1 drivers
+v007DA1E8_0 .alias "en", 0 0, v007DA558_0;
+S_006F0270 .scope module, "L1" "latch" 2 9, 2 1, S_006F01E8;
+ .timescale 0 0;
+L_006EADB0 .functor NAND 1, L_006EACD0, L_006EADE8, C4<1>, C4<1>;
+L_006EADE8 .functor NAND 1, L_006EAD40, L_006EADB0, C4<1>, C4<1>;
+v007D9E78_0 .alias "Q", 0 0, v007DA5B0_0;
+v007D9ED0_0 .alias "Qbar", 0 0, v007DA608_0;
+v007D9F28_0 .alias "Rbar", 0 0, v007DA0E0_0;
+v007D9F80_0 .alias "Sbar", 0 0, v007DA190_0;
+    .scope S_006F00D8;
+T_0 ;
+    %set/v v007DA710_0, 0, 1;
+    %set/v v007DA6B8_0, 0, 1;
+    %vpi_call 2 34 "$monitor", "%4dns monitor: clk=%d S=%d R=%d Q=%d Qbar=%d", $stime, v007DA710_0, v007DA6B8_0, v007DA660_0, v007DA5B0_0, v007DA608_0;
+    %vpi_call 2 35 "$dumpfile", "ptdLatch.vcd";
+    %vpi_call 2 36 "$dumpvars";
+    %end;
+    .thread T_0;
+    .scope S_006F00D8;
+T_1 ;
+    %delay 20, 0;
+    %load/v 8, v007DA710_0, 1;
+    %mov 9, 0, 31;
+    %addi 8, 1, 32;
+    %set/v v007DA710_0, 8, 1;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_006F00D8;
+T_2 ;
+    %delay 50, 0;
+    %load/v 8, v007DA6B8_0, 1;
+    %mov 9, 0, 31;
+    %addi 8, 1, 32;
+    %set/v v007DA6B8_0, 8, 1;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_006F00D8;
+T_3 ;
+    %delay 500, 0;
+    %vpi_call 2 47 "$finish";
+    %end;
+    .thread T_3;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "ptdLatch.v";
